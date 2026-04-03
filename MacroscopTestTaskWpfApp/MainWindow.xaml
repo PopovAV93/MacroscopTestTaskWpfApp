@@ -37,7 +37,7 @@
                                 IsImageLoaded="{Binding IsImage1Loaded, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
             <custom:ImageLoader Grid.Column="2"
                                 x:Name="ImageLoader2"
-                                Delay="2500"
+                                Delay="2000"
                                 Button1Text="START"
                                 Button1Command="{Binding StartLoadingImageCommand}"
                                 Button1Parameter="{Binding ., ElementName=ImageLoader2}"
@@ -46,7 +46,7 @@
                                 Button2Parameter="{Binding ., ElementName=ImageLoader2}"
                                 IsImageLoaded="{Binding IsImage2Loaded, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
             <custom:ImageLoader Grid.Column="4" 
-                                Delay="3000"
+                                Delay="2000"
                                 x:Name="ImageLoader3"
                                 Button1Text="START"
                                 Button1Command="{Binding StartLoadingImageCommand}"

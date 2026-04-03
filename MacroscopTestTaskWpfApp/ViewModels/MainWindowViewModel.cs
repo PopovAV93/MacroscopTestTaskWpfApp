@@ -87,8 +87,11 @@ public partial class MainWindowViewModel : ObservableObject
     [RelayCommand]
     private static void StopLoadingImage(ImageLoader imgLoader)
     {
-        imgLoader.CancellationTokenSource.Cancel();
-        imgLoader.IsImageLoading = false;
+        imgLoader.Dispatcher.Invoke(() =>
+        {
+            imgLoader.CancellationTokenSource.Cancel();
+            imgLoader.IsImageLoading = false;
+        });
     }
 
     [RelayCommand]
@@ -101,7 +104,11 @@ public partial class MainWindowViewModel : ObservableObject
         {
             foreach (var imageLoader in imageLoaders)
             {
-                tasks.Add(Task.Run(() => StartLoadingImage(imageLoader)));
+                tasks.Add(Task.Run(() =>
+                    {
+                        StopLoadingImage(imageLoader);
+                        StartLoadingImage(imageLoader);
+                    }));
             }
             await Task.WhenAll(tasks);
         }
