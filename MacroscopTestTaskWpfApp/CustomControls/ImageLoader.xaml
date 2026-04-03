@@ -1,0 +1,65 @@
+﻿<UserControl x:Class="MacroscopTestTaskWpfApp.CustomControls.ImageLoader"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MacroscopTestTaskWpfApp.CustomControls"
+             xmlns:converters="clr-namespace:MacroscopTestTaskWpfApp.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="460" d:DesignWidth="260"
+             x:Name="ImageLoaderControl">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        <converters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" BorderThickness="1" BorderBrush="Black">
+            <Grid Background="White">
+                <TextBox Text="Loading" 
+                         FontSize="20" 
+                         Style="{DynamicResource ImageLoaderTextBoxStyle1}"
+                         Visibility="{Binding IsImageLoading, ElementName=ImageLoaderControl, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}"/>
+                <TextBox Text="To upload an image, please enter a URL ending in one of the following formats below:
+                              '.jpg', '.jpeg', '.png', '.gif', '.bmp', '.svg'"
+                         TextWrapping="Wrap"
+                         FontSize="18" 
+                         Style="{DynamicResource ImageLoaderTextBoxStyle1}"
+                         Visibility="{Binding IsImageLoading, ElementName=ImageLoaderControl, Converter={StaticResource InverseBooleanToVisibilityConverter}, Mode=OneWay}"/>
+                <Image Source="{Binding ImageSource, ElementName=ImageLoaderControl}"/>
+                <!--https://upload.wikimedia.org/wikipedia/commons/7/70/Example.png-->
+            </Grid>
+        </Border>
+
+        <TextBox Grid.Row="2"
+                 FontSize="18"
+                 Style="{DynamicResource ImageLoaderTextBoxStyle2}"
+                 Text="{Binding UriText, ElementName=ImageLoaderControl}"/>
+
+        <Button Grid.Row="4" 
+                Style="{DynamicResource RoundedButtonStyle}"
+                FontSize="18"
+                Content="{Binding Button1Text, ElementName=ImageLoaderControl}" 
+                Command="{Binding Button1Command, ElementName=ImageLoaderControl}"
+                CommandParameter="{Binding Button1Parameter, ElementName=ImageLoaderControl}"
+                IsEnabled="{Binding IsImageLoading, ElementName=ImageLoaderControl, Converter={StaticResource InverseBooleanConverter}}"/>
+
+        <Button Grid.Row="6" 
+                Style="{DynamicResource RoundedButtonStyle}"
+                FontSize="18"
+                Content="{Binding Button2Text, ElementName=ImageLoaderControl}"
+                Command="{Binding Button2Command, ElementName=ImageLoaderControl}"
+                CommandParameter="{Binding Button2Parameter, ElementName=ImageLoaderControl}"
+                IsEnabled="{Binding IsImageLoading, ElementName=ImageLoaderControl}"/>
+    </Grid>
+</UserControl>
